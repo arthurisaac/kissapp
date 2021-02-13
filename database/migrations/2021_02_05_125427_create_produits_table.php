@@ -24,7 +24,7 @@ class CreateProduitsTable extends Migration
             $table->integer('prix_gros')->default(0);
             $table->integer('prix_semi')->default(0);
             $table->integer('prix_details')->default(0);
-            $table->foreignId('categorie')->references('id')->on('categorie')->onDelete('cascade');
+            $table->foreignId('categorie')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

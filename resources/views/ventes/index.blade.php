@@ -53,7 +53,7 @@
                     <a>{{$nombreVente[0]->nombreVente}} ventes</a>
                 </div>
                 <div class="description">
-                    <h1>{{$ventesDuJour[0]->ventesDuJour ?? 0}} FCA</h1>
+                    <h1>{{number_format($ventesDuJour[0]->ventesDuJour) ?? 0}} FCA</h1>
                 </div>
             </div>
             <div class="extra content"><span class="right floated"></span>
@@ -72,6 +72,9 @@
                         @if (intval($outOfStock) > 0 )
                             <div class="ui red label">{{$outOfStock}}</div>
                         @endif
+                    </a>
+                    <a class="item" href="/deconnexion">
+                        Déconnexion
                     </a>
                 </div>
                 <div class="ui left vertical dividing"></div>
@@ -95,8 +98,8 @@
                                 <tr>
                                     <td>{{$facture->numeroFacture}}</td>
                                     <td>{{$facture->numeroClient}}</td>
-                                    <td>{{$facture->montantTotal}}</td>
-                                    <td>{{$facture->montantPaye}}</td>
+                                    <td>{{number_format($facture->montantTotal,0,","," ")}}</td>
+                                    <td>{{number_format($facture->montantPaye,0,","," ")}}</td>
                                     <td>{{$facture->montantRestant}}</td>
                                     <td>{{$facture->created_at}}</td>
                                 </tr>

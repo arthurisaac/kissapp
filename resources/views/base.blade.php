@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KISSAPP</title>
     <link rel="stylesheet" href="{{ asset('css/semantic.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
 </head>

@@ -1,0 +1,123 @@
+.home-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 40px;
+}
+
+.home-row {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.home-element {
+    background: #616161;
+    color: #F5F5F5;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #F5F5F5;
+    border-radius: 5px;
+    justify-content: center;
+    flex: 1 0 21%;
+    min-width: 170px;
+    margin: 20px;
+    font-weight: bold;
+}
+
+.home-element a {
+    color: #F5F5F5;
+    text-transform: uppercase;
+}
+.home-element a:hover {
+    color: #F5F5F5;
+    text-transform: uppercase;
+}
+
+.home-element--boutique {
+    background: #E91E63;
+}
+.home-element--produits {
+    background: #FFC107;
+}
+.home-element--ventes {
+    background: #00BCD4;
+}
+.home-element--utilisateurs {
+    background: #7C4DFF;
+}
+.home-element--boutique:hover {
+    background: #616161;
+}
+.home-element--produits:hover {
+    background: #616161;
+}
+.home-element--ventes:hover {
+    background: #616161;
+}
+.home-element--utilisateurs:hover {
+    background: #616161;
+}
+
+.login-container {
+    background-color: #BDBDBD;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    height: -webkit-fill-available;
+}
+
+.login-form {
+    width: 30%;
+}
+
+@media only screen and (min-width: 400px) {
+    .login-form {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .login-form {
+        width: 60%;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .login-form {
+        width: 30%;
+    }
+}
+
+.home-user-logged {
+    padding: 40px 80px 0 0;
+    text-align: right;
+    color: #616161;
+}
+
+.home-header--bande-rouge {
+    height: 5px;
+    width: 100%;
+    background-color: #DC2624;
+}
+
+.home-header--bande-verte {
+    height: 5px;
+    width: 100%;
+    background-color: #019A41;
+}
+
+.home-header h3{
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.home-header {
+    display: flex;
+    align-items: center;
+    padding: 38px;
+}

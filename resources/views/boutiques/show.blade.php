@@ -49,7 +49,7 @@
             <h1>{{$boutique->libelle}}</h1>
             <br>
             <div class="ui grid">
-                <div class="column">
+                <div class="four wide column">
                     <div class="ui card">
                         <div class="content">
                             <a class="header">Stock</a>
@@ -64,6 +64,18 @@
                             Ajouter des produits
                         </div>
                     </div>
+                </div>
+                <div class="eight wide column">
+
+                    <div class="ui statistic">
+                        <div class="value">
+                            {{number_format($ventesDuJour[0]->ventesDuJour) ?? 0}} FCA
+                        </div>
+                        <div class="label">
+                            Total ventes du jour
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -142,29 +154,30 @@
                                 <tr>
                                     <th></th>
                                     <th>Nom</th>
-                                    <th>Prenom</th>
-                                    <th>Nom d'utilisateur</th>
-                                    <th>Date d'ajout</th>
+                                    <th>Adresse e-mail</th>
+                                    <th>Date de création</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{--<tr>
-                                    <td class="collapsing">
-                                        <div class="ui fitted slider checkbox">
-                                            <input type="checkbox"> <label></label>
-                                        </div>
-                                    </td>
-                                    <td>John Lilki</td>
-                                    <td>September 14, 2013</td>
-                                    <td>jhlilk22@yahoo.com</td>
-                                    <td>No</td>
-                                </tr>--}}
+                                <tr>
+                                    @foreach($utilisateursDeLaBoutique as $utilisateur)
+                                        <td class="collapsing">
+                                            <div class="ui fitted slider checkbox">
+                                                <input type="checkbox"> <label></label>
+                                            </div>
+                                        </td>
+                                        <td>{{$utilisateur->name}}</td>
+                                        <td>{{$utilisateur->email}}</td>
+                                        <td>{{$utilisateur->created_at}}</td>
+                                    @endforeach
+                                </tr>
                                 </tbody>
                                 <tfoot class="full-width">
                                 <tr>
                                     <th></th>
                                     <th colspan="4">
-                                        <div class="ui right floated small primary labeled icon button">
+                                        <div class="ui right floated small primary labeled icon button"
+                                             onclick="showModal()">
                                             <i class="user icon"></i> Ajouter un utilisateur
                                         </div>
                                     </th>
@@ -173,9 +186,61 @@
                             </table>
                         </div>
                         <div class="ui tab" data-tab="tab-income">
-                            income
+                            <div class="ui large relaxed divided list">
+                                <div class="item">
+                                    <div class="content">
+                                        <div class="header">Ventes de la journée</div>
+                                        {{number_format($ventesDuJour[0]->ventesDuJour) ?? 0}} F CFA
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="content">
+                                        <div class="header">Vente de la semaine</div>
+                                        {{number_format($ventesDelaSemaine[0]->ventesDelaSemaine) ?? 0}} F CFA
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="content">
+                                        <div class="header">Vente du mois</div>
+                                        {{number_format($ventesDuMois[0]->ventesDuMois) ?? 0}} F CFA
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="ui small modal">
+                <div class="header">Ajouter un utilisateur</div>
+                <div class="content">
+                    <div class="ui container">
+                        <div class="ui grid">
+                            <div class="column">
+                                <form class="ui form">
+                                    <div class="field">
+                                        <label for="name">Nom d'utilisateur</label>
+                                        <select id="name" name="utilisateur" class="ui search dropdown" required>
+                                            <option></option>
+                                            @foreach($utilisateurs as $utilisateur)
+                                                <option value="{{$utilisateur->id}}">{{$utilisateur->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label for="boutiqueID">Boutique</label>
+                                        <input type="text" name="boutiqueID" value="{{$boutique->id}}" readonly
+                                               required>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="actions">
+                    <div class="ui approve button">Ajouter</div>
+                    <div class="ui cancel button">Annuler</div>
                 </div>
             </div>
         @endif
@@ -183,6 +248,40 @@
     <script>
         $(document).ready(function () {
             $('.pointing.menu .item').tab();
+            $('select').dropdown();
         });
+
+        function showModal() {
+            $('.ui.modal')
+                .modal({
+                    closable: true,
+                    onApprove: function () {
+                        const tokenInput = '@csrf';
+                        const token = $(tokenInput).val();
+                        const utilisateur = $('#name').val();
+                        const boutique = $('#boutiqueID').val();
+
+                        /*$.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': token
+                            }
+                        });*/
+                        $.ajax({
+                            url: `/utilisateurs/${utilisateur}`,
+                            type: 'PATCH',
+                            data: {_token:'{{ csrf_token() }}', boutique: @json($boutique->id), type: 'utilisateur', _method: "PATCH"},
+                            //contentType: 'application/json',
+                            //dataType: 'text',
+                            success: function () {
+                                //window.location.reload();
+                            },
+                            error: function (result) {
+                                alert(JSON.stringify(result));
+                            }
+                        });
+                    }
+                })
+                .modal('show');
+        }
     </script>
 @endsection

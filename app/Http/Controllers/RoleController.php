@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AccueilController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,32 +15,7 @@ class AccueilController extends Controller
      */
     public function index()
     {
-        $user = session('user');
-        if ($user) {
-            return view('.accueil');
-        }
-        return redirect('/login');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function login()
-    {
-        return view('auth.login');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function deconnexion()
-    {
-        session()->remove('user');
-        return redirect('/');
+        //
     }
 
     /**
@@ -55,12 +31,19 @@ class AccueilController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+           'role'
+        ]);
+        $data = new Role([
+            'role' => $request->get('role')
+        ]);
+        $data->save();
+        return redirect()->route('utilisateurs.create')->with('Role enregistré!');
     }
 
     /**
@@ -88,7 +71,7 @@ class AccueilController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return Response
      */
